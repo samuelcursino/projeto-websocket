@@ -15,3 +15,18 @@ http.listen(porta, function(){
 app.get('/', function(req, res){
     res.sendFile(__dirname + '/index.html')
 })
+
+serverSocket.on('connection', function(socket){
+    
+    socket.on('login', function(nickname){
+        console.log('Usuário conectada: ' + nickname)
+        serverSocket.emit('chat msg', `Usuário ${nickname} conectou.`)
+        socket.nickname = nickname
+    })
+
+    socket.on('chat msg', function(msg){
+        console.log(`Msg recebida do Usuário ${socket.nickname}: ${msg}`);
+        serverSocket.emit('chat msg', `${socket.nickname}: ${msg}`)
+    })
+})
+
