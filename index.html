@@ -41,7 +41,7 @@
                     })
                     
                      socket.on('status', function(msg){
-                    $('#status').append($('<li>').text(msg))
+                    $('#status').html(msg)
                     })
                      
                 } else {
