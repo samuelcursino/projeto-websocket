@@ -28,5 +28,9 @@ serverSocket.on('connection', function(socket){
         console.log(`Msg recebida do Usuário ${socket.nickname}: ${msg}`);
         serverSocket.emit('chat msg', `${socket.nickname}: ${msg}`)
     })
+
+    socket.on('status', function(msg){        
+        socket.broadcast.emit('status', msg)
+    })
 })
 

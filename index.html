@@ -31,7 +31,19 @@
                 $('form').submit(function(evt){
                 if(socket.nickname === ''){
                     socket.nickname = $('#msg').val()
-                    socket.emit('login', $('#msg').val())
+                    socket.emit('login', socket.nickname)
+
+                    $('#msg').keypress(function(evt){
+                    socket.emit('status', `${socket.nickname} está digitando...`)
+                    })
+                    $('#msg').keyup(function(evt){
+                    socket.emit('status', '')
+                    })
+                    
+                     socket.on('status', function(msg){
+                    $('#status').append($('<li>').text(msg))
+                    })
+                     
                 } else {
                     socket.emit('chat msg', $('#msg').val())
                 }
@@ -44,6 +56,7 @@
             $('#mensagens').append($('<li>').text(msg))
         })
 
+       
         })
     </script>
 </body>
